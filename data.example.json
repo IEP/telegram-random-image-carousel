@@ -1,0 +1,12 @@
+{
+    "bucket_1": [
+        {
+            "photo_url": "https://a.com/photo1",
+            "description": "Photo 1"
+        },
+        {
+            "photo_url": "https://a.com/photo2",
+            "description": "Photo 2"
+        }
+    ]
+}
