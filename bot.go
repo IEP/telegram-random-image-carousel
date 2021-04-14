@@ -37,10 +37,20 @@ func RunBot(config *Config, repository *Repository) {
 func SetRepository(b *tb.Bot, repository *Repository) {
 	rand.Seed(time.Now().UnixNano())
 
+	commands := make([]tb.Command, 0)
 	bucketList := make([]string, 0)
+
 	for bucket := range repository.Bucket {
 		// Handle pointer of handlers by copying bucket name
 		bucket := bucket
+
+		commands = append(
+			commands,
+			tb.Command{
+				Text:        bucket,
+				Description: "Get random image from " + bucket,
+			},
+		)
 
 		// Add bucket to list for /info
 		bucketList = append(bucketList, "/"+bucket)
@@ -67,4 +77,15 @@ func SetRepository(b *tb.Bot, repository *Repository) {
 	b.Handle("/info", func(m *tb.Message) {
 		b.Reply(m, "Available buckets:\n"+strings.Join(bucketList, "\n"))
 	})
+
+	commands = append(
+		commands,
+		tb.Command{
+			Text:        "/info",
+			Description: "Get bot information",
+		},
+	)
+
+	log.Println("Setting up commands")
+	b.SetCommands(commands)
 }
