@@ -9,16 +9,27 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
+// RunBot based on the configuration and repository passed
 func RunBot(config *Config, repository *Repository) {
 	settings := tb.Settings{
 		Token: config.BotAPIToken,
-		Poller: &tb.Webhook{
+	}
+
+	// if both port and webhook URL are configured, use webhook
+	if config.Port != "" && config.WebhookURL != "" {
+		settings.Poller = &tb.Webhook{
 			Listen: ":" + config.Port,
 			Endpoint: &tb.WebhookEndpoint{
 				PublicURL: config.WebhookURL,
 			},
-		},
+		}
+		// fallback to long poller
+	} else {
+		settings.Poller = &tb.LongPoller{
+			Timeout: 10 * time.Second,
+		}
 	}
+
 	log.Println("Loading the bot")
 	b, err := tb.NewBot(settings)
 	if err != nil {
@@ -34,6 +45,7 @@ func RunBot(config *Config, repository *Repository) {
 	b.Start()
 }
 
+// SetRepository binds repository data to the bot commands
 func SetRepository(b *tb.Bot, repository *Repository) {
 	rand.Seed(time.Now().UnixNano())
 

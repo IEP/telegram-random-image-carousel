@@ -35,6 +35,9 @@ func LoadData(filename string) (*Repository, error) {
 
 	repo := Repository{Bucket: b, BucketSize: make(map[string]int)}
 	for k, v := range repo.Bucket {
+		if len(v) == 0 {
+			panic("bucket size must be larger than zero")
+		}
 		repo.BucketSize[k] = len(v)
 	}
 

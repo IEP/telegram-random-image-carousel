@@ -6,4 +6,6 @@
 
 ## Usage
 
-Create `config.yaml` and `data.json` (see example files) and run with `./telegram-random-image-carousel`
+Create `config.yaml` and `data.json` (see example files) and finally run the bot by using `./telegram-random-image-carousel`.
+
+Get the random image by triggering it using `/bucketName` command.

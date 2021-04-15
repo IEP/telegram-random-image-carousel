@@ -8,7 +8,7 @@ import (
 func TestConfig(t *testing.T) {
 	reference := &Config{
 		BotAPIToken: "1234567890",
-		WebhookURL:  "https://some_website.com/api/telegram",
+		WebhookURL:  "https://some_website.com",
 		Port:        "3000",
 	}
 
